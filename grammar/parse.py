@@ -43,6 +43,7 @@ class CoreParser(GenericParser):
             single_command ::= modifiers
             single_command ::= english
             single_command ::= word_sentence
+            single_command ::= word_variable
             single_command ::= word_phrase
         '''
         return args[0]
@@ -228,6 +229,7 @@ class CoreParser(GenericParser):
             letter ::= delta
             letter ::= eco
             letter ::= echo
+            letter ::= ergo
             letter ::= fox
             letter ::= golf
             letter ::= hotel
@@ -273,7 +275,10 @@ class CoreParser(GenericParser):
             character ::= ampersand
             character ::= star
             character ::= late
+            character ::= len
             character ::= rate
+            character ::= lack
+            character ::= left square
             character ::= minus
             character ::= dash
             character ::= underscore
@@ -302,7 +307,10 @@ class CoreParser(GenericParser):
             'ampersand': 'ampersand',
             'star': 'asterisk',
             'late': 'parenleft',
+            'len': 'parenleft',
             'rate': 'parenright',
+            'lack': 'curlleft',
+            'left': 'leftsquare',
             'minus': 'minus',
             'dash': 'minus',
             'underscore': 'underscore',
@@ -339,13 +347,15 @@ class CoreParser(GenericParser):
             modifiers ::= alternative single_command
             modifiers ::= super single_command
             modifiers ::= shift single_command
+            modifiers ::= command single_command
         '''
         value = {
             'control' : 'ctrl',
             'alt' : 'alt',
             'alternative' : 'alt',
             'super' : 'Super_L',
-            'shift' : 'Shift_L'
+            'shift' : 'Shift_L',
+            'command' : 'cmd'
         }
         if(args[1].type == 'mod_plus_key'):
             args[1].meta.insert(0, value[args[0].type])
@@ -366,6 +376,16 @@ class CoreParser(GenericParser):
         if(len(args[1].children) > 0):
             args[1].children[0].meta = args[1].children[0].meta.capitalize()
         return args[1]
+
+    def p_word_variable(self, args):
+        '''
+            word_variable ::= variable word_repeat
+        '''
+        if(len(args[1].children) > 0):
+            args[1].children[0].meta = args[1].children[0].meta.capitalize()
+        print('TEST: ' + str(args))
+        return args[1]
+
 
     def p_word_phrase(self, args):
         '''

@@ -103,6 +103,8 @@ class CLIClickAutomator(Automator):
         'asterisk'  : "t:'*'",
         'parenleft' : "t:'('",
         'parenright': "t:')'",
+        'locke'     : "t:'{'",
+        'leftsquare': "t:'['",
         'underscore': "t:'_'",
         'plus'      : "t:'+'",
         'backslash' : "t:'\\'",
